@@ -1,25 +1,17 @@
-name: event-triggers-example
+name: actions-example
 on:
   push:
-    branches: 
-      - 'main'
-      - 'foo/*'
-      - 'foo/**'
-      - '!foo/*/456'
-    tags:
-      - '*'
-  pull_request:
-    branches:
-      - 'main'
-  schedule:
-    - cron: '*/15 * * * *'
 jobs:
-  say-hello:
+  use-actions:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '15.8.0'
       -
-        name: Event
-        run: "Triggered by: $GITHUB_EVENT_NAME"
+        name: Install repo dependencies
+        run: npm install
       -
-        name: Say Hello
-        run: echo "Hello world!"
+        name: Run script from repo
+        run: node files/helloWorld.js
